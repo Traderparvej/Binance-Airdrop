@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>$100 Airdrop</title>
+<title>$100 Airdrop Demo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body{margin:0;font-family:Segoe UI,sans-serif;background:#050b12;color:#fff;}
@@ -38,7 +38,7 @@ footer{text-align:center;font-size:12px;opacity:.6;margin-top:15px;}
 
 <div class="container">
 <div class="card">
-<h1>🎉 $100 AIRDROP</h1>
+<h1>🎉 $100 AIRDROP DEMO</h1>
 <div class="sub">5 Winners • Binance UID Payment</div>
 
 <div class="counter">
@@ -72,7 +72,7 @@ footer{text-align:center;font-size:12px;opacity:.6;margin-top:15px;}
 <p>👥 Referrals: <span id="refCount">0</span></p>
 </div>
 
-<div class="timer" id="timer">Loading status...</div>
+<div class="timer" id="timer">⏳ Ends in 10d 0h 0m</div>
 
 <div id="leaderboard">
 <h3>🏆 Top Referrers</h3>
@@ -94,64 +94,91 @@ Rewards will be sent within 24–48 hours
 </div>
 
 <script>
-const SERVER="https://YOUR-SERVER-URL";
+// Frontend-only simulation
 let done={tg:false,yt:false,uid:false};
-let ref=new URLSearchParams(window.location.search).get("ref");
+let participants=0;
+let referrals=0;
+let leaderboard=[];
 
-function taskDone(id,link){window.open(link,'_blank');document.getElementById(id).classList.add("done");done[id]=true;checkAll();}
-function checkUID(){done.uid=document.getElementById("binance").value.length>=6;checkAll();}
-function checkAll(){if(done.tg&&done.yt&&done.uid){let btn=document.getElementById("claim");btn.classList.add("active");btn.disabled=false;btn.onclick=submitAirdrop;}}
-
-async function submitAirdrop(){
-let uid=document.getElementById("binance").value;
-let tg=done.tg; let yt=done.yt;
-let res=await fetch(SERVER+"/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({uid,ref,tg,yt})});
-let data=await res.json();
-if(data.error) alert(data.error);
-else{
-alert("✅ Submitted! Share your referral link.");
-document.getElementById("refBox").style.display="block";
-document.getElementById("refLink").value=window.location.origin+"?ref="+data.refCode;
-updateReferralCount();
-}
+function taskDone(id,link){
+  window.open(link,'_blank');
+  document.getElementById(id).classList.add("done");
+  done[id]=true;
+  checkAll();
 }
 
-async function updateReferralCount(){
-let r=await fetch(SERVER+"/refcount?ref="+document.getElementById("refLink").value.split("ref=")[1]);
-let d=await r.json();
-document.getElementById("refCount").innerText=d.count;
+function checkUID(){
+  done.uid=document.getElementById("binance").value.length>=6;
+  checkAll();
 }
 
-async function updateCount(){
-let r=await fetch(SERVER+"/count");
-let d=await r.json();
-document.getElementById("liveCount").innerText = 10554 + d.total;
+function checkAll(){
+  if(done.tg && done.yt && done.uid){
+    let btn=document.getElementById("claim");
+    btn.classList.add("active");
+    btn.disabled=false;
+    btn.onclick=submitAirdrop;
+  }
 }
-setInterval(updateCount,5000);
-updateCount();
 
-async function checkStatus(){
-let r=await fetch(SERVER+"/status"); let d=await r.json();
-if(d.ended){document.getElementById("claim").disabled=true;document.getElementById("claim").innerText="⛔ Airdrop Ended";showWinners(); return;}
-let end=new Date(d.endDate);
-setInterval(()=>{let now=new Date();let diff=end-now;let days=Math.floor(diff/(1000*60*60*24));let hrs=Math.floor((diff%(1000*60*60*24))/(1000*60*60));let min=Math.floor((diff%(1000*60*60))/(1000*60));
-document.getElementById("timer").innerText=`⏳ Ends in ${days}d ${hrs}h ${min}m`;},1000);}
-checkStatus();
+function submitAirdrop(){
+  participants++;
+  updateCount();
+  // Generate referral link
+  let code=Math.random().toString(36).substring(2,8);
+  document.getElementById("refBox").style.display="block";
+  document.getElementById("refLink").value=window.location.origin+"?ref="+code;
+  referrals=0;
+  updateRefCount();
+  alert("✅ Airdrop Claimed!");
+  // Update leaderboard
+  leaderboard.push({uid:document.getElementById("binance").value, referrals:referrals});
+  updateLeaderboard();
+}
 
-async function showWinners(){
-let r=await fetch(SERVER+"/admin/winners-public"); let w=await r.json();
-let ul=document.getElementById("winnerList"); ul.innerHTML="";
-w.forEach(x=>{let li=document.createElement("li"); li.innerText="Binance UID: "+x.uid; ul.appendChild(li);});
-document.getElementById("winnerPopup").style.display="flex";}
+function updateCount(){
+  document.getElementById("liveCount").innerText = 10554 + participants;
+}
+
+function updateRefCount(){
+  document.getElementById("refCount").innerText = referrals;
+}
+
+function addReferral(){
+  referrals++;
+  updateRefCount();
+  updateLeaderboard();
+}
+
+// Simulate adding random referrals
+setInterval(()=>{if(document.getElementById("refBox").style.display=="block"){addReferral();}},3000);
+
+function updateLeaderboard(){
+  leaderboard.sort((a,b)=>b.referrals-a.referrals);
+  let ul=document.getElementById("leaderList");
+  ul.innerHTML="";
+  leaderboard.slice(0,10).forEach((u,i)=>{
+    let li=document.createElement("li");
+    li.innerText=`${i+1}. UID: ${u.uid} | Referrals: ${u.referrals}`;
+    ul.appendChild(li);
+  });
+}
+
+// Winner Popup demo
+setTimeout(()=>{
+  if(leaderboard.length>0){
+    let winners=leaderboard.slice(0,5);
+    let ul=document.getElementById("winnerList"); ul.innerHTML="";
+    winners.forEach(u=>{
+      let li=document.createElement("li");
+      li.innerText=`UID: ${u.uid}`;
+      ul.appendChild(li);
+    });
+    document.getElementById("winnerPopup").style.display="flex";
+  }
+},20000);
+
 function closePopup(){document.getElementById("winnerPopup").style.display="none";}
-
-async function loadLeaderboard(){
-let r=await fetch(SERVER+"/leaderboard"); let data=await r.json();
-let ul=document.getElementById("leaderList"); ul.innerHTML="";
-data.forEach((u,i)=>{let li=document.createElement("li"); li.innerText=`${i+1}. UID: ${u.uid} | Referrals: ${u.referrals}`; ul.appendChild(li);});
-}
-setInterval(loadLeaderboard,5000);
-loadLeaderboard();
 </script>
 
 </body>
