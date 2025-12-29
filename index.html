@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>$100 Airdrop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Segoe UI,sans-serif;background:#050b12;color:#fff;}
+.container{max-width:420px;margin:30px auto;padding:20px;}
+.card{background:#0c141d;border-radius:16px;padding:22px;box-shadow:0 0 25px rgba(255,0,0,.25);}
+h1{text-align:center;color:#ff3b3b;}
+.sub{text-align:center;font-size:14px;opacity:.85;}
+.counter{text-align:center;margin:12px 0;color:#00ffb3;}
+.reward{background:#111;padding:14px;border-radius:12px;text-align:center;margin:15px 0;}
+.reward span{font-size:22px;color:#ffd66b;font-weight:700;}
+.task{background:#121a24;border-radius:12px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.task.done{border:1px solid #00ff9c;}
+.task button{background:#ff3b3b;border:none;color:#fff;padding:7px 14px;border-radius:8px;cursor:pointer;}
+input{width:100%;padding:12px;border-radius:10px;border:none;margin-top:10px;font-size:15px;}
+#claim{width:100%;margin-top:18px;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,#ff3b3b,#ff914d);font-size:18px;font-weight:700;opacity:.5;cursor:not-allowed;}
+#claim.active{opacity:1;cursor:pointer;}
+.timer{text-align:center;margin-top:14px;color:#ffda7a;font-size:14px;}
+footer{text-align:center;font-size:12px;opacity:.6;margin-top:15px;}
+/* Winner Popup */
+#winnerPopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;}
+.popup{background:#111;padding:25px;border-radius:16px;text-align:center;max-width:300px;}
+.popup h2{color:#00ff9c;}
+.popup ul{list-style:none;padding:0;}
+.popup li{background:#1a1a1a;margin:6px 0;padding:6px;border-radius:8px;}
+.popup button{margin-top:10px;padding:8px 14px;border:none;border-radius:8px;background:#ff3b3b;color:#fff;}
+#leaderboard{margin-top:20px;}
+#leaderboard h3{text-align:center;color:#ff3b3b;}
+#leaderList{list-style:none;padding:0;}
+#leaderList li{background:#111;margin:5px 0;padding:6px;border-radius:8px;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<div class="card">
+<h1>🎉 $100 AIRDROP</h1>
+<div class="sub">5 Winners • Binance UID Payment</div>
+
+<div class="counter">
+👥 <span id="liveCount">10554</span> Participants Joined
+</div>
+
+<div class="reward">
+💰 Total Reward<br>
+<span>$100 (5 × $20)</span>
+</div>
+
+<div class="task" id="tg">
+<span>📢 Join Telegram</span>
+<button onclick="taskDone('tg','https://t.me/example_channel')">Join</button>
+</div>
+
+<div class="task" id="yt">
+<span>▶️ Subscribe YouTube</span>
+<button onclick="taskDone('yt','https://www.youtube.com/redirect?event=channel_header&q=https://www.youtube.com/example')">Subscribe</button>
+</div>
+
+<div class="task" id="uid">
+<span>🏦 Enter Binance UID</span>
+</div>
+<input id="binance" type="number" placeholder="Enter your Binance UID" oninput="checkUID()">
+
+<button id="claim">🚀 Claim Airdrop</button>
+<div id="refBox" style="display:none;text-align:center;margin-top:12px;">
+<p>🔗 Your Referral Link</p>
+<input id="refLink" readonly>
+<p>👥 Referrals: <span id="refCount">0</span></p>
+</div>
+
+<div class="timer" id="timer">Loading status...</div>
+
+<div id="leaderboard">
+<h3>🏆 Top Referrers</h3>
+<ul id="leaderList"></ul>
+</div>
+
+<footer>
+Rewards will be sent within 24–48 hours
+</footer>
+</div>
+</div>
+
+<div id="winnerPopup">
+  <div class="popup">
+    <h2>🎉 Winners Announced</h2>
+    <ul id="winnerList"></ul>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
+
+<script>
+const SERVER="https://YOUR-SERVER-URL";
+let done={tg:false,yt:false,uid:false};
+let ref=new URLSearchParams(window.location.search).get("ref");
+
+function taskDone(id,link){window.open(link,'_blank');document.getElementById(id).classList.add("done");done[id]=true;checkAll();}
+function checkUID(){done.uid=document.getElementById("binance").value.length>=6;checkAll();}
+function checkAll(){if(done.tg&&done.yt&&done.uid){let btn=document.getElementById("claim");btn.classList.add("active");btn.disabled=false;btn.onclick=submitAirdrop;}}
+
+async function submitAirdrop(){
+let uid=document.getElementById("binance").value;
+let tg=done.tg; let yt=done.yt;
+let res=await fetch(SERVER+"/submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({uid,ref,tg,yt})});
+let data=await res.json();
+if(data.error) alert(data.error);
+else{
+alert("✅ Submitted! Share your referral link.");
+document.getElementById("refBox").style.display="block";
+document.getElementById("refLink").value=window.location.origin+"?ref="+data.refCode;
+updateReferralCount();
+}
+}
+
+async function updateReferralCount(){
+let r=await fetch(SERVER+"/refcount?ref="+document.getElementById("refLink").value.split("ref=")[1]);
+let d=await r.json();
+document.getElementById("refCount").innerText=d.count;
+}
+
+async function updateCount(){
+let r=await fetch(SERVER+"/count");
+let d=await r.json();
+document.getElementById("liveCount").innerText = 10554 + d.total;
+}
+setInterval(updateCount,5000);
+updateCount();
+
+async function checkStatus(){
+let r=await fetch(SERVER+"/status"); let d=await r.json();
+if(d.ended){document.getElementById("claim").disabled=true;document.getElementById("claim").innerText="⛔ Airdrop Ended";showWinners(); return;}
+let end=new Date(d.endDate);
+setInterval(()=>{let now=new Date();let diff=end-now;let days=Math.floor(diff/(1000*60*60*24));let hrs=Math.floor((diff%(1000*60*60*24))/(1000*60*60));let min=Math.floor((diff%(1000*60*60))/(1000*60));
+document.getElementById("timer").innerText=`⏳ Ends in ${days}d ${hrs}h ${min}m`;},1000);}
+checkStatus();
+
+async function showWinners(){
+let r=await fetch(SERVER+"/admin/winners-public"); let w=await r.json();
+let ul=document.getElementById("winnerList"); ul.innerHTML="";
+w.forEach(x=>{let li=document.createElement("li"); li.innerText="Binance UID: "+x.uid; ul.appendChild(li);});
+document.getElementById("winnerPopup").style.display="flex";}
+function closePopup(){document.getElementById("winnerPopup").style.display="none";}
+
+async function loadLeaderboard(){
+let r=await fetch(SERVER+"/leaderboard"); let data=await r.json();
+let ul=document.getElementById("leaderList"); ul.innerHTML="";
+data.forEach((u,i)=>{let li=document.createElement("li"); li.innerText=`${i+1}. UID: ${u.uid} | Referrals: ${u.referrals}`; ul.appendChild(li);});
+}
+setInterval(loadLeaderboard,5000);
+loadLeaderboard();
+</script>
+
+</body>
+</html>
