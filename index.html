@@ -80,6 +80,7 @@ p{color:#333;font-size:15px;}
 
         <div class="counter" id="counter">0 / 5</div>
 
+        <!-- Separate share buttons -->
         <button class="btn" onclick="shareNow('whatsapp')">📤 Share on WhatsApp</button>
         <button class="btn" onclick="shareNow('facebook')">📘 Share on Facebook</button>
         <button class="btn" onclick="shareNow('telegram')">✈️ Share on Telegram</button>
@@ -93,28 +94,28 @@ p{color:#333;font-size:15px;}
 <script>
 let count = 0;
 
-function openPopup(){document.getElementById("popup").style.display="block";}
-function closePopup(){document.getElementById("popup").style.display="none";}
+function openPopup(){ document.getElementById("popup").style.display="block"; }
+function closePopup(){ document.getElementById("popup").style.display="none"; }
 
 function shareNow(platform){
-    if(count < 5){
-        count++;
-        document.getElementById("counter").innerText = count + " / 5";
+    if(count >= 5) return; // 5-share limit
 
-        const message = encodeURIComponent("🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/+GZgahL37bvEwNWNl");
+    const message = encodeURIComponent("🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/+GZgahL37bvEwNWNl");
 
-        if(platform==='whatsapp'){
-            window.open("https://wa.me/?text=" + message,"_blank");
-        } else if(platform==='facebook'){
-            window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://t.me/+GZgahL37bvEwNWNl") + "&quote=" + message,"_blank");
-        } else if(platform==='telegram'){
-            window.open("https://t.me/share/url?url=" + encodeURIComponent("https://t.me/+GZgahL37bvEwNWNl") + "&text=" + message,"_blank");
-        }
+    if(platform === 'whatsapp'){
+        window.open("https://wa.me/?text=" + message, "_blank");
+    } else if(platform === 'facebook'){
+        window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://t.me/+GZgahL37bvEwNWNl") + "&quote=" + message, "_blank");
+    } else if(platform === 'telegram'){
+        window.open("https://t.me/share/url?url=" + encodeURIComponent("https://t.me/+GZgahL37bvEwNWNl") + "&text=" + message,"_blank");
+    }
 
-        if(count===5){
-            document.getElementById("finishBtn").disabled=false;
-            alert("🎉 Task ready to submit! Click 'Task Completed'");
-        }
+    count++;
+    document.getElementById("counter").innerText = count + " / 5";
+
+    if(count === 5){
+        document.getElementById("finishBtn").disabled=false;
+        alert("🎉 Task ready to submit! Click 'Task Completed'");
     }
 }
 
