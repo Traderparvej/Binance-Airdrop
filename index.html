@@ -2,183 +2,154 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>$100 Airdrop Demo</title>
+<title>Complete Task & Earn Reward</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{margin:0;font-family:Segoe UI,sans-serif;background:#050b12;color:#fff;}
-.container{max-width:420px;margin:30px auto;padding:20px;}
-.card{background:#0c141d;border-radius:16px;padding:22px;box-shadow:0 0 25px rgba(255,0,0,.25);}
-h1{text-align:center;color:#ff3b3b;}
-.sub{text-align:center;font-size:14px;opacity:.85;}
-.counter{text-align:center;margin:12px 0;color:#00ffb3;}
-.reward{background:#111;padding:14px;border-radius:12px;text-align:center;margin:15px 0;}
-.reward span{font-size:22px;color:#ffd66b;font-weight:700;}
-.task{background:#121a24;border-radius:12px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
-.task.done{border:1px solid #00ff9c;}
-.task button{background:#ff3b3b;border:none;color:#fff;padding:7px 14px;border-radius:8px;cursor:pointer;}
-input{width:100%;padding:12px;border-radius:10px;border:none;margin-top:10px;font-size:15px;}
-#claim{width:100%;margin-top:18px;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,#ff3b3b,#ff914d);font-size:18px;font-weight:700;opacity:.5;cursor:not-allowed;}
-#claim.active{opacity:1;cursor:pointer;}
-.timer{text-align:center;margin-top:14px;color:#ffda7a;font-size:14px;}
-footer{text-align:center;font-size:12px;opacity:.6;margin-top:15px;}
-/* Winner Popup */
-#winnerPopup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;}
-.popup{background:#111;padding:25px;border-radius:16px;text-align:center;max-width:300px;}
-.popup h2{color:#00ff9c;}
-.popup ul{list-style:none;padding:0;}
-.popup li{background:#1a1a1a;margin:6px 0;padding:6px;border-radius:8px;}
-.popup button{margin-top:10px;padding:8px 14px;border:none;border-radius:8px;background:#ff3b3b;color:#fff;}
-#leaderboard{margin-top:20px;}
-#leaderboard h3{text-align:center;color:#ff3b3b;}
-#leaderList{list-style:none;padding:0;}
-#leaderList li{background:#111;margin:5px 0;padding:6px;border-radius:8px;}
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+h1 {
+    text-align: center;
+    color: #0a7cff;
+}
+.btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #0a7cff;
+    color: #fff;
+    padding: 14px;
+    margin-top: 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+}
+.btn:disabled {
+    background: #999;
+}
+.task-box {
+    background: #f1f7ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.note {
+    font-size: 13px;
+    color: #777;
+    text-align: center;
+}
+
+/* POPUP */
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+}
+.popup-content {
+    background: #fff;
+    max-width: 360px;
+    margin: 20% auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.counter {
+    font-size: 18px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+.close {
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
 </style>
 </head>
+
 <body>
 
 <div class="container">
-<div class="card">
-<h1>🎉 $100 AIRDROP DEMO</h1>
-<div class="sub">5 Winners • Binance UID Payment</div>
+    <h1>🎁 Earn Reward</h1>
 
-<div class="counter">
-👥 <span id="liveCount">10554</span> Participants Joined
+    <div class="task-box">
+        <ul>
+            <li>Join our Telegram community</li>
+            <li>Submit proof</li>
+            <li>Share with 5 friends</li>
+        </ul>
+    </div>
+
+    <a class="btn" href="https://t.me/TraderParvej_Community" target="_blank">
+        👉 Join Telegram
+    </a>
+
+    <a class="btn" href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" onclick="openPopup()">
+        ✅ Submit Task Proof
+    </a>
+
+    <p class="note">Limited rewards. Selected users will be paid.</p>
 </div>
 
-<div class="reward">
-💰 Total Reward<br>
-<span>$100 (5 × $20)</span>
-</div>
+<!-- POPUP -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>🔁 Share to Complete</h2>
+        <p>Share with 5 friends to finish task</p>
 
-<div class="task" id="tg">
-<span>📢 Join Telegram</span>
-<button onclick="taskDone('tg','https://t.me/TraderParvej_Community')">Join</button>
-</div>
+        <div class="counter" id="counter">0 / 5</div>
 
-<div class="task" id="yt">
-<span>▶️ Subscribe YouTube</span>
-<button onclick="taskDone('yt','https://www.youtube.com/@bdtradingsquad')">Subscribe</button>
-</div>
+        <a class="btn" onclick="shareNow()">
+            📤 Share on WhatsApp / Facebook
+        </a>
 
-<div class="task" id="uid">
-<span>🏦 Enter Binance UID</span>
-</div>
-<input id="binance" type="number" placeholder="Enter your Binance UID" oninput="checkUID()">
+        <button class="btn" id="finishBtn" disabled>
+            ✅ Task Completed
+        </button>
 
-<button id="claim">🚀 Claim Airdrop</button>
-<div id="refBox" style="display:none;text-align:center;margin-top:12px;">
-<p>🔗 Your Referral Link</p>
-<input id="refLink" readonly>
-<p>👥 Referrals: <span id="refCount">0</span></p>
-</div>
-
-<div class="timer" id="timer">⏳ Ends in 10d 0h 0m</div>
-
-<div id="leaderboard">
-<h3>🏆 Top Referrers</h3>
-<ul id="leaderList"></ul>
-</div>
-
-<footer>
-Rewards will be sent within 24–48 hours
-</footer>
-</div>
-</div>
-
-<div id="winnerPopup">
-  <div class="popup">
-    <h2>🎉 Winners Announced</h2>
-    <ul id="winnerList"></ul>
-    <button onclick="closePopup()">Close</button>
-  </div>
+        <div class="close" onclick="closePopup()">Close</div>
+    </div>
 </div>
 
 <script>
-// Frontend-only simulation
-let done={tg:false,yt:false,uid:false};
-let participants=0;
-let referrals=0;
-let leaderboard=[];
+let count = 0;
 
-function taskDone(id,link){
-  window.open(link,'_blank');
-  document.getElementById(id).classList.add("done");
-  done[id]=true;
-  checkAll();
+function openPopup() {
+    document.getElementById("popup").style.display = "block";
 }
 
-function checkUID(){
-  done.uid=document.getElementById("binance").value.length>=6;
-  checkAll();
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
 }
 
-function checkAll(){
-  if(done.tg && done.yt && done.uid){
-    let btn=document.getElementById("claim");
-    btn.classList.add("active");
-    btn.disabled=false;
-    btn.onclick=submitAirdrop;
-  }
+function shareNow() {
+    if (count < 5) {
+        count++;
+        document.getElementById("counter").innerText = count + " / 5";
+
+        let text = encodeURIComponent(
+            "Simple online task available 🎁 Join now 👉 https://t.me/TraderParvej_Community"
+        );
+
+        window.open("https://wa.me/?text=" + text, "_blank");
+
+        if (count === 5) {
+            document.getElementById("finishBtn").disabled = false;
+            alert("🎉 Task Completed Successfully!");
+        }
+    }
 }
-
-function submitAirdrop(){
-  participants++;
-  updateCount();
-  // Generate referral link
-  let code=Math.random().toString(36).substring(2,8);
-  document.getElementById("refBox").style.display="block";
-  document.getElementById("refLink").value=window.location.origin+"?ref="+code;
-  referrals=0;
-  updateRefCount();
-  alert("✅ Airdrop Claimed!");
-  // Update leaderboard
-  leaderboard.push({uid:document.getElementById("binance").value, referrals:referrals});
-  updateLeaderboard();
-}
-
-function updateCount(){
-  document.getElementById("liveCount").innerText = 10554 + participants;
-}
-
-function updateRefCount(){
-  document.getElementById("refCount").innerText = referrals;
-}
-
-function addReferral(){
-  referrals++;
-  updateRefCount();
-  updateLeaderboard();
-}
-
-// Simulate adding random referrals
-setInterval(()=>{if(document.getElementById("refBox").style.display=="block"){addReferral();}},3000);
-
-function updateLeaderboard(){
-  leaderboard.sort((a,b)=>b.referrals-a.referrals);
-  let ul=document.getElementById("leaderList");
-  ul.innerHTML="";
-  leaderboard.slice(0,10).forEach((u,i)=>{
-    let li=document.createElement("li");
-    li.innerText=`${i+1}. UID: ${u.uid} | Referrals: ${u.referrals}`;
-    ul.appendChild(li);
-  });
-}
-
-// Winner Popup demo
-setTimeout(()=>{
-  if(leaderboard.length>0){
-    let winners=leaderboard.slice(0,5);
-    let ul=document.getElementById("winnerList"); ul.innerHTML="";
-    winners.forEach(u=>{
-      let li=document.createElement("li");
-      li.innerText=`UID: ${u.uid}`;
-      ul.appendChild(li);
-    });
-    document.getElementById("winnerPopup").style.display="flex";
-  }
-},20000);
-
-function closePopup(){document.getElementById("winnerPopup").style.display="none";}
 </script>
 
 </body>
