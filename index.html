@@ -2,78 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Complete Task & Earn Reward</title>
+<title>Complete Task & Get $5 USDT</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
+body{
     font-family: Arial, sans-serif;
-    background: #f4f6f8;
+    background:#f4f6f8;
 }
-.container {
-    max-width: 600px;
-    margin: 40px auto;
-    background: #fff;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+.container{
+    max-width:600px;
+    margin:40px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
 }
-h1 {
-    text-align: center;
-    color: #0a7cff;
+h1{
+    text-align:center;
+    color:#0a7cff;
 }
-.btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    background: #0a7cff;
-    color: #fff;
-    padding: 14px;
-    margin-top: 15px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
+p{
+    color:#333;
+    font-size:15px;
 }
-.btn:disabled {
-    background: #999;
+.task-box{
+    background:#f1f7ff;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
 }
-.task-box {
-    background: #f1f7ff;
-    padding: 15px;
-    border-radius: 8px;
-    margin-top: 20px;
+.btn{
+    display:block;
+    width:100%;
+    background:#0a7cff;
+    color:#fff;
+    text-align:center;
+    padding:14px;
+    margin-top:15px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:16px;
+    font-weight:bold;
 }
-.note {
-    font-size: 13px;
-    color: #777;
-    text-align: center;
+.btn:disabled{
+    background:#999;
+}
+.note{
+    font-size:13px;
+    color:#777;
+    margin-top:15px;
+    text-align:center;
 }
 
-/* POPUP */
-.popup {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
+/* Popup */
+.popup{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
 }
-.popup-content {
-    background: #fff;
-    max-width: 360px;
-    margin: 20% auto;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
+.popup-content{
+    background:#fff;
+    max-width:360px;
+    margin:20% auto;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
 }
-.counter {
-    font-size: 18px;
-    margin: 10px 0;
-    font-weight: bold;
+.counter{
+    font-size:18px;
+    font-weight:bold;
+    margin:10px 0;
 }
-.close {
-    margin-top: 10px;
-    font-size: 14px;
-    cursor: pointer;
+.close{
+    font-size:14px;
+    cursor:pointer;
+    margin-top:10px;
 }
 </style>
 </head>
@@ -81,38 +86,59 @@ h1 {
 <body>
 
 <div class="container">
-    <h1>🎁 Earn Reward</h1>
+    <h1>🎁 Complete Task & Get $5 USDT</h1>
+
+    <p>
+        This is a limited promotional task for new users.  
+        Complete the steps correctly and eligible users will receive  
+        <strong>$5 USDT via Binance</strong>.
+    </p>
 
     <div class="task-box">
+        <strong>📌 Task Requirements:</strong>
         <ul>
-            <li>Join our Telegram community</li>
-            <li>Submit proof</li>
-            <li>Share with 5 friends</li>
+            <li>Join our official Telegram community</li>
+            <li>Stay joined for minimum 24 hours</li>
+            <li>Submit your Telegram username</li>
+            <li>Share this offer with 5 friends</li>
+        </ul>
+    </div>
+
+    <div class="task-box">
+        <strong>💵 Reward & Payment:</strong>
+        <ul>
+            <li>Reward Amount: <strong>$5 USDT</strong></li>
+            <li>Payment Method: <strong>Binance only</strong></li>
+            <li>Processing Time: 24–48 hours</li>
+            <li>Eligible & verified users only</li>
         </ul>
     </div>
 
     <a class="btn" href="https://t.me/TraderParvej_Community" target="_blank">
-        👉 Join Telegram
+        👉 Join Telegram Community
     </a>
 
     <a class="btn" href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" onclick="openPopup()">
         ✅ Submit Task Proof
     </a>
 
-    <p class="note">Limited rewards. Selected users will be paid.</p>
+    <p class="note">
+        ⚠️ Binance account required. Duplicate or fake submissions will be disqualified.
+    </p>
 </div>
 
-<!-- POPUP -->
+<!-- SHARE POPUP -->
 <div class="popup" id="popup">
     <div class="popup-content">
-        <h2>🔁 Share to Complete</h2>
-        <p>Share with 5 friends to finish task</p>
+        <h2>🔁 Final Step</h2>
+        <p>
+            To complete your task and qualify for <strong>$5 USDT</strong>,  
+            please share this offer with <strong>5 friends</strong>.
+        </p>
 
         <div class="counter" id="counter">0 / 5</div>
 
-        <a class="btn" onclick="shareNow()">
-            📤 Share on WhatsApp / Facebook
-        </a>
+        <a class="btn" onclick="shareNow()">📤 Share Now</a>
 
         <button class="btn" id="finishBtn" disabled>
             ✅ Task Completed
@@ -125,28 +151,28 @@ h1 {
 <script>
 let count = 0;
 
-function openPopup() {
-    document.getElementById("popup").style.display = "block";
+function openPopup(){
+    document.getElementById("popup").style.display="block";
 }
 
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
+function closePopup(){
+    document.getElementById("popup").style.display="none";
 }
 
-function shareNow() {
-    if (count < 5) {
+function shareNow(){
+    if(count < 5){
         count++;
         document.getElementById("counter").innerText = count + " / 5";
 
         let text = encodeURIComponent(
-            "Simple online task available 🎁 Join now 👉 https://t.me/TraderParvej_Community"
+            "🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/TraderParvej_Community"
         );
 
         window.open("https://wa.me/?text=" + text, "_blank");
 
-        if (count === 5) {
+        if(count === 5){
             document.getElementById("finishBtn").disabled = false;
-            alert("🎉 Task Completed Successfully!");
+            alert("🎉 Task submitted successfully! Verification in progress.");
         }
     }
 }
