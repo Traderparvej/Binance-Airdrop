@@ -9,6 +9,8 @@
 body{
     font-family: Arial, sans-serif;
     background:#f4f6f8;
+    margin:0;
+    padding:0;
 }
 .container{
     max-width:600px;
@@ -18,14 +20,8 @@ body{
     border-radius:10px;
     box-shadow:0 0 15px rgba(0,0,0,0.1);
 }
-h1{
-    text-align:center;
-    color:#0a7cff;
-}
-p{
-    color:#333;
-    font-size:15px;
-}
+h1{text-align:center;color:#0a7cff;}
+p{color:#333;font-size:15px;}
 .task-box{
     background:#f1f7ff;
     padding:15px;
@@ -46,15 +42,8 @@ p{
     font-weight:bold;
     cursor:pointer;
 }
-.btn:disabled{
-    background:#999;
-}
-.note{
-    font-size:13px;
-    color:#777;
-    margin-top:15px;
-    text-align:center;
-}
+.btn:disabled{background:#999;}
+.note{font-size:13px;color:#777;margin-top:15px;text-align:center;}
 
 /* Popup */
 .popup{
@@ -62,11 +51,12 @@ p{
     position:fixed;
     inset:0;
     background:rgba(0,0,0,0.6);
+    z-index:999;
 }
 .popup-content{
     background:#fff;
     max-width:360px;
-    margin:20% auto;
+    margin:15% auto;
     padding:20px;
     border-radius:10px;
     text-align:center;
@@ -81,6 +71,28 @@ p{
     cursor:pointer;
     margin-top:10px;
 }
+
+/* Binance ID Form */
+#binanceForm{
+    display:none;
+    margin-top:20px;
+}
+#binanceForm input{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+#thankMessage{
+    display:none;
+    margin-top:20px;
+    text-align:center;
+    font-size:16px;
+    color:green;
+    font-weight:bold;
+}
 </style>
 </head>
 
@@ -89,11 +101,7 @@ p{
 <div class="container">
     <h1>🎁 Complete Task & Get $5 USDT</h1>
 
-    <p>
-        Limited promotional task for new users.  
-        Complete the steps correctly and eligible users will receive  
-        <strong>$5 USDT via Binance</strong>.
-    </p>
+    <p>Limited promotional task for new users. Eligible users will receive <strong>$5 USDT via Binance</strong>.</p>
 
     <div class="task-box">
         <strong>📌 Task Requirements:</strong>
@@ -116,36 +124,33 @@ p{
     </div>
 
     <!-- Telegram Join -->
-    <a class="btn" href="https://t.me/+GZgahL37bvEwNWNl" target="_blank">
-        👉 Join Telegram Community
-    </a>
+    <a class="btn" href="https://t.me/+GZgahL37bvEwNWNl" target="_blank">👉 Join Telegram Community</a>
 
     <!-- Submit Task Proof -->
-    <button class="btn" onclick="openPopup()">
-        ✅ Submit Task Proof
-    </button>
+    <button class="btn" id="submitBtn" onclick="openPopup()">✅ Submit Task Proof</button>
 
-    <p class="note">
-        ⚠️ Binance account required. Duplicate or fake submissions will be disqualified.
-    </p>
+    <p class="note">⚠️ Binance account required. Duplicate or fake submissions will be disqualified.</p>
+
+    <!-- Binance ID Form -->
+    <div id="binanceForm">
+        <input type="text" id="binanceID" placeholder="Enter your Binance ID/UID" required>
+        <button class="btn" onclick="submitBinanceID()">Submit Binance ID</button>
+    </div>
+
+    <div id="thankMessage">🎉 ধন্যবাদ! আপনার submission গ্রহণ করা হয়েছে। Verification চলছে।</div>
 </div>
 
 <!-- SHARE POPUP -->
 <div class="popup" id="popup">
     <div class="popup-content">
         <h2>🔁 Final Step</h2>
-        <p>
-            To receive <strong>$5 USDT (Binance)</strong>,  
-            please share this offer with <strong>5 friends</strong>.
-        </p>
+        <p>To receive <strong>$5 USDT (Binance)</strong>, please share this offer with <strong>5 friends</strong>.</p>
 
         <div class="counter" id="counter">0 / 5</div>
 
         <button class="btn" onclick="shareNow()">📤 Share Now</button>
 
-        <button class="btn" id="finishBtn" disabled>
-            ✅ Task Completed
-        </button>
+        <button class="btn" id="finishBtn" disabled onclick="openBinanceForm()">✅ Task Completed</button>
 
         <div class="close" onclick="closePopup()">Close</div>
     </div>
@@ -157,27 +162,35 @@ let count = 0;
 function openPopup(){
     document.getElementById("popup").style.display="block";
 }
-
 function closePopup(){
     document.getElementById("popup").style.display="none";
 }
-
 function shareNow(){
     if(count < 5){
         count++;
         document.getElementById("counter").innerText = count + " / 5";
-
-        let text = encodeURIComponent(
-            "🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/+GZgahL37bvEwNWNl"
-        );
-
+        let text = encodeURIComponent("🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/+GZgahL37bvEwNWNl");
         window.open("https://wa.me/?text=" + text, "_blank");
-
-        if(count === 5){
+        if(count===5){
             document.getElementById("finishBtn").disabled = false;
-            alert("🎉 Task submitted successfully! Verification in progress.");
+            alert("🎉 Task ready to submit! Click 'Task Completed'");
         }
     }
+}
+function openBinanceForm(){
+    closePopup();
+    document.getElementById("binanceForm").style.display = "block";
+}
+function submitBinanceID(){
+    const id = document.getElementById("binanceID").value.trim();
+    if(id===""){
+        alert("Please enter your Binance ID/UID");
+        return;
+    }
+    // এখানে আপনি চাইলে Form submission API call বা Google Form redirect করতে পারেন
+    document.getElementById("binanceForm").style.display="none";
+    document.getElementById("thankMessage").style.display="block";
+    alert("🎉 ধন্যবাদ! আপনার Binance ID গ্রহণ করা হয়েছে। Verification চলছে।");
 }
 </script>
 
