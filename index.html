@@ -44,6 +44,7 @@ p{
     text-decoration:none;
     font-size:16px;
     font-weight:bold;
+    cursor:pointer;
 }
 .btn:disabled{
     background:#999;
@@ -89,7 +90,7 @@ p{
     <h1>🎁 Complete Task & Get $5 USDT</h1>
 
     <p>
-        This is a limited promotional task for new users.  
+        Limited promotional task for new users.  
         Complete the steps correctly and eligible users will receive  
         <strong>$5 USDT via Binance</strong>.
     </p>
@@ -114,13 +115,15 @@ p{
         </ul>
     </div>
 
-    <a class="btn" href="https://t.me/TraderParvej_Community" target="_blank">
+    <!-- Telegram Join -->
+    <a class="btn" href="https://t.me/+GZgahL37bvEwNWNl" target="_blank">
         👉 Join Telegram Community
     </a>
 
-    <a class="btn" href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" onclick="openPopup()">
+    <!-- Submit Task Proof -->
+    <button class="btn" onclick="openPopup()">
         ✅ Submit Task Proof
-    </a>
+    </button>
 
     <p class="note">
         ⚠️ Binance account required. Duplicate or fake submissions will be disqualified.
@@ -132,13 +135,13 @@ p{
     <div class="popup-content">
         <h2>🔁 Final Step</h2>
         <p>
-            To complete your task and qualify for <strong>$5 USDT</strong>,  
+            To receive <strong>$5 USDT (Binance)</strong>,  
             please share this offer with <strong>5 friends</strong>.
         </p>
 
         <div class="counter" id="counter">0 / 5</div>
 
-        <a class="btn" onclick="shareNow()">📤 Share Now</a>
+        <button class="btn" onclick="shareNow()">📤 Share Now</button>
 
         <button class="btn" id="finishBtn" disabled>
             ✅ Task Completed
@@ -165,7 +168,7 @@ function shareNow(){
         document.getElementById("counter").innerText = count + " / 5";
 
         let text = encodeURIComponent(
-            "🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/TraderParvej_Community"
+            "🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/+GZgahL37bvEwNWNl"
         );
 
         window.open("https://wa.me/?text=" + text, "_blank");
