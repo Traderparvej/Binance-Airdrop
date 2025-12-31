@@ -6,93 +6,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background:#f4f6f8;
-    margin:0;
-    padding:0;
-}
-.container{
-    max-width:600px;
-    margin:40px auto;
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 0 15px rgba(0,0,0,0.1);
-}
+body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;padding:0;}
+.container{max-width:600px;margin:40px auto;background:#fff;padding:25px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,0.1);}
 h1{text-align:center;color:#0a7cff;}
 p{color:#333;font-size:15px;}
-.task-box{
-    background:#f1f7ff;
-    padding:15px;
-    border-radius:8px;
-    margin-top:15px;
-}
-.btn{
-    display:block;
-    width:100%;
-    background:#0a7cff;
-    color:#fff;
-    text-align:center;
-    padding:14px;
-    margin-top:15px;
-    border-radius:6px;
-    text-decoration:none;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-}
+.task-box{background:#f1f7ff;padding:15px;border-radius:8px;margin-top:15px;}
+.btn{display:block;width:100%;background:#0a7cff;color:#fff;text-align:center;padding:14px;margin-top:15px;border-radius:6px;text-decoration:none;font-size:16px;font-weight:bold;cursor:pointer;}
 .btn:disabled{background:#999;}
 .note{font-size:13px;color:#777;margin-top:15px;text-align:center;}
 
 /* Popup */
-.popup{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    z-index:999;
-}
-.popup-content{
-    background:#fff;
-    max-width:360px;
-    margin:15% auto;
-    padding:20px;
-    border-radius:10px;
-    text-align:center;
-}
-.counter{
-    font-size:18px;
-    font-weight:bold;
-    margin:10px 0;
-}
-.close{
-    font-size:14px;
-    cursor:pointer;
-    margin-top:10px;
-}
+.popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;}
+.popup-content{background:#fff;max-width:360px;margin:15% auto;padding:20px;border-radius:10px;text-align:center;}
+.counter{font-size:18px;font-weight:bold;margin:10px 0;}
+.close{font-size:14px;cursor:pointer;margin-top:10px;}
 
 /* Binance ID Form */
-#binanceForm{
-    display:none;
-    margin-top:20px;
-}
-#binanceForm input{
-    width:100%;
-    padding:12px;
-    margin-bottom:10px;
-    border-radius:5px;
-    border:1px solid #ccc;
-    font-size:15px;
-}
-#thankMessage{
-    display:none;
-    margin-top:20px;
-    text-align:center;
-    font-size:16px;
-    color:green;
-    font-weight:bold;
-}
+#binanceForm{display:none;margin-top:20px;}
+#binanceForm input{width:100%;padding:12px;margin-bottom:10px;border-radius:5px;border:1px solid #ccc;font-size:15px;}
+#thankMessage{display:none;margin-top:20px;text-align:center;font-size:16px;color:green;font-weight:bold;}
 </style>
 </head>
 
@@ -109,7 +41,7 @@ p{color:#333;font-size:15px;}
             <li>Join our official Telegram community</li>
             <li>Stay joined for minimum 24 hours</li>
             <li>Submit your Telegram username</li>
-            <li>Share this offer with 5 friends</li>
+            <li>Share this offer with 5 friends (WhatsApp / Facebook / Telegram)</li>
         </ul>
     </div>
 
@@ -148,7 +80,9 @@ p{color:#333;font-size:15px;}
 
         <div class="counter" id="counter">0 / 5</div>
 
-        <button class="btn" onclick="shareNow()">📤 Share Now</button>
+        <button class="btn" onclick="shareNow('whatsapp')">📤 Share on WhatsApp</button>
+        <button class="btn" onclick="shareNow('facebook')">📘 Share on Facebook</button>
+        <button class="btn" onclick="shareNow('telegram')">✈️ Share on Telegram</button>
 
         <button class="btn" id="finishBtn" disabled onclick="openBinanceForm()">✅ Task Completed</button>
 
@@ -159,35 +93,39 @@ p{color:#333;font-size:15px;}
 <script>
 let count = 0;
 
-function openPopup(){
-    document.getElementById("popup").style.display="block";
-}
-function closePopup(){
-    document.getElementById("popup").style.display="none";
-}
-function shareNow(){
+function openPopup(){document.getElementById("popup").style.display="block";}
+function closePopup(){document.getElementById("popup").style.display="none";}
+
+function shareNow(platform){
     if(count < 5){
         count++;
         document.getElementById("counter").innerText = count + " / 5";
-        let text = encodeURIComponent("🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/+GZgahL37bvEwNWNl");
-        window.open("https://wa.me/?text=" + text, "_blank");
+
+        const message = encodeURIComponent("🎁 Complete simple online task & get $5 USDT via Binance. Join now 👉 https://t.me/+GZgahL37bvEwNWNl");
+
+        if(platform==='whatsapp'){
+            window.open("https://wa.me/?text=" + message,"_blank");
+        } else if(platform==='facebook'){
+            window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://t.me/+GZgahL37bvEwNWNl") + "&quote=" + message,"_blank");
+        } else if(platform==='telegram'){
+            window.open("https://t.me/share/url?url=" + encodeURIComponent("https://t.me/+GZgahL37bvEwNWNl") + "&text=" + message,"_blank");
+        }
+
         if(count===5){
-            document.getElementById("finishBtn").disabled = false;
+            document.getElementById("finishBtn").disabled=false;
             alert("🎉 Task ready to submit! Click 'Task Completed'");
         }
     }
 }
+
 function openBinanceForm(){
     closePopup();
-    document.getElementById("binanceForm").style.display = "block";
+    document.getElementById("binanceForm").style.display="block";
 }
+
 function submitBinanceID(){
     const id = document.getElementById("binanceID").value.trim();
-    if(id===""){
-        alert("Please enter your Binance ID/UID");
-        return;
-    }
-    // এখানে আপনি চাইলে Form submission API call বা Google Form redirect করতে পারেন
+    if(id===""){alert("Please enter your Binance ID/UID"); return;}
     document.getElementById("binanceForm").style.display="none";
     document.getElementById("thankMessage").style.display="block";
     alert("🎉 ধন্যবাদ! আপনার Binance ID গ্রহণ করা হয়েছে। Verification চলছে।");
