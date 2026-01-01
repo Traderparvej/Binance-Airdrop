@@ -2,109 +2,246 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Join Telegram & Get $5 USDT</title>
+<title>Verified Airdrop Campaign – $5 USDT</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{font-family:Arial,sans-serif;background:#f4f6f8;margin:0;padding:0;}
-.container{max-width:600px;margin:40px auto;background:#fff;padding:25px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,0.1);}
-h1{text-align:center;color:#0a7cff;}
-p{color:#333;font-size:15px;}
-.task-box{background:#f1f7ff;padding:15px;border-radius:8px;margin-top:15px;}
-.btn{display:block;width:100%;background:#0a7cff;color:#fff;text-align:center;padding:14px;margin-top:15px;border-radius:6px;font-size:16px;font-weight:bold;border:none;cursor:pointer;}
-.note{font-size:13px;color:#777;margin-top:15px;text-align:center;}
+:root{
+--primary:#2563eb;
+--accent:#22c55e;
+--bg:#f5f7fb;
+}
+*{box-sizing:border-box}
 
-/* Binance Form */
-#binanceForm{display:none;margin-top:20px;}
-#binanceForm input{width:100%;padding:12px;margin-bottom:10px;border-radius:5px;border:1px solid #ccc;font-size:15px;}
+body{
+margin:0;
+font-family:Inter,Arial,sans-serif;
+background:linear-gradient(120deg,#eef2ff,#f8fafc);
+}
 
-#thankMessage{
-display:none;
-margin-top:20px;
+/* Main Container */
+.container{
+max-width:640px;
+margin:40px auto;
+background:#fff;
+padding:28px;
+border-radius:20px;
+box-shadow:0 30px 60px rgba(0,0,0,.12);
+animation:fadeIn .9s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(25px)}
+to{opacity:1;transform:none}
+}
+
+/* Header */
+.header{
 text-align:center;
+padding:30px 20px;
+border-radius:18px;
+color:#fff;
+background:linear-gradient(135deg,#2563eb,#06b6d4);
+position:relative;
+overflow:hidden;
+}
+
+.header::after{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at top,rgba(255,255,255,.25),transparent 60%);
+}
+
+.header h1{margin:0;font-size:26px}
+.header p{margin:10px 0 0;font-size:14px;opacity:.95}
+
+/* Verified badge */
+.verified{
+margin-top:14px;
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:6px 16px;
+border-radius:999px;
+background:rgba(255,255,255,.2);
+font-size:13px;
+font-weight:600;
+animation:pulse 2.5s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
+70%{box-shadow:0 0 0 14px rgba(255,255,255,0)}
+100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+}
+
+/* Trust strip */
+.trust-strip{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-top:22px;
+}
+
+.trust{
+background:#f8fafc;
+border-radius:14px;
+padding:14px;
+text-align:center;
+font-size:13px;
+font-weight:600;
+animation:slideUp .7s ease both;
+}
+
+.trust:nth-child(2){animation-delay:.1s}
+.trust:nth-child(3){animation-delay:.2s}
+
+@keyframes slideUp{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:none}
+}
+
+/* Info Cards */
+.card{
+margin-top:20px;
+background:#f9fbff;
+border-radius:16px;
+padding:20px;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+box-shadow:0 14px 30px rgba(37,99,235,.18);
+}
+
+.card ul{margin:10px 0 0 18px;font-size:14px}
+
+/* Buttons */
+.btn{
+width:100%;
+margin-top:16px;
+padding:16px;
+border:none;
+border-radius:16px;
 font-size:16px;
-color:green;
-font-weight:bold;
+font-weight:700;
+color:#fff;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+cursor:pointer;
+transition:.3s;
 }
-.warning{
-color:#d90429;
-font-size:14px;
-font-weight:bold;
-margin-top:10px;
+
+.btn:hover{transform:translateY(-2px)}
+
+/* Form */
+#binanceForm{
+display:none;
+margin-top:22px;
+animation:fadeIn .5s ease;
 }
+
+input{
+width:100%;
+padding:15px;
+border-radius:14px;
+border:1px solid #c7d2fe;
+font-size:15px;
+margin-bottom:10px;
+}
+
+.success{
+display:none;
+margin-top:22px;
+padding:18px;
+border-radius:16px;
+background:#ecfdf5;
+color:#047857;
+font-weight:600;
+text-align:center;
+animation:fadeIn .6s ease;
+}
+
+.note{
+margin-top:14px;
+font-size:13px;
+color:#6b7280;
+text-align:center;
+}
+
+.warn{color:#dc2626;font-weight:600}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h1>🎁 Join Telegram & Get $5 USDT</h1>
 
-<p>
-Limited promotional offer.  
-Eligible users will receive <strong>$5 USDT (Binance)</strong>.
-</p>
+<div class="header">
+<h1>🎁 Verified USDT Airdrop</h1>
+<p>Complete simple Telegram task & earn rewards</p>
+<div class="verified">🔒 Admin Verified Campaign</div>
+</div>
 
-<div class="task-box">
-<strong>📌 Task Requirements (Must Follow):</strong>
+<div class="trust-strip">
+<div class="trust">🧠 Manual Review</div>
+<div class="trust">🔐 Binance Payout</div>
+<div class="trust">🛡️ Anti-Fraud</div>
+</div>
+
+<div class="card">
+<strong>📌 How to Participate</strong>
 <ul>
 <li>Join our official Telegram channel</li>
-<li class="warning">🚨 Stay joined for minimum <u>24 HOURS (MANDATORY)</u></li>
+<li class="warn">Stay joined for minimum 24 hours (mandatory)</li>
 <li>Submit your Binance UID</li>
-<li>Leaving before 24H = <strong>DISQUALIFIED</strong></li>
+<li>Verification by admin team</li>
 </ul>
 </div>
 
-<div class="task-box">
-<strong>💵 Reward Details:</strong>
+<div class="card">
+<strong>💵 Reward Information</strong>
 <ul>
-<li>Reward: <strong>$5 USDT</strong></li>
-<li>Payment Method: <strong>Binance only</strong></li>
-<li>Processing Time: 24–48 hours</li>
-<li>Manual verification by admin</li>
+<li>Reward Amount: <b>$5 USDT</b></li>
+<li>Network: Binance</li>
+<li>Distribution Time: 24–48 hours</li>
 </ul>
 </div>
 
-<a class="btn" href="https://t.me/+GZgahL37bvEwNWNl" target="_blank">
-👉 Join Telegram Channel
+<a href="https://t.me/+GZgahL37bvEwNWNl" target="_blank">
+<button class="btn">👉 Join Telegram Channel</button>
 </a>
 
-<button class="btn" onclick="showBinanceForm()">
-✅ Submit Task
-</button>
+<button class="btn" onclick="openForm()">✅ Submit Task</button>
 
 <p class="note">
-⚠️ Your Telegram join time will be verified manually.  
-Fake, early-leave or duplicate entries will be rejected.
+⚠️ Telegram join duration is checked manually.  
+Leaving early or fake UID = rejected.
 </p>
 
-<!-- Binance UID -->
 <div id="binanceForm">
-<input type="text" id="binanceID" placeholder="Enter your Binance UID">
-<button class="btn" onclick="submitBinanceID()">Submit Binance UID</button>
+<input type="text" id="uid" placeholder="Enter your Binance UID">
+<button class="btn" onclick="submitUID()">Submit Binance UID</button>
 </div>
 
-<div id="thankMessage">
-🎉 ধন্যবাদ! আপনার submission গ্রহণ করা হয়েছে।  
-<br>Admin verification চলমান আছে।
+<div class="success" id="success">
+🎉 Submission successful!  
+<br>Verification in progress.
 </div>
 
 </div>
 
 <script>
-function showBinanceForm(){
+function openForm(){
 document.getElementById("binanceForm").style.display="block";
-window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+document.getElementById("binanceForm").scrollIntoView({behavior:"smooth"});
 }
-
-function submitBinanceID(){
-let id=document.getElementById("binanceID").value.trim();
-if(id===""){
-alert("Please enter your Binance UID");
-return;
-}
+function submitUID(){
+let uid=document.getElementById("uid").value.trim();
+if(uid===""){alert("Please enter Binance UID");return;}
 document.getElementById("binanceForm").style.display="none";
-document.getElementById("thankMessage").style.display="block";
+document.getElementById("success").style.display="block";
 }
 </script>
 
