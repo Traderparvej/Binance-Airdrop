@@ -19,7 +19,6 @@ font-family:Inter,Arial,sans-serif;
 background:linear-gradient(120deg,#eef2ff,#f8fafc);
 }
 
-/* Main Container */
 .container{
 max-width:640px;
 margin:40px auto;
@@ -35,7 +34,6 @@ from{opacity:0;transform:translateY(25px)}
 to{opacity:1;transform:none}
 }
 
-/* Header */
 .header{
 text-align:center;
 padding:30px 20px;
@@ -43,40 +41,22 @@ border-radius:18px;
 color:#fff;
 background:linear-gradient(135deg,#2563eb,#06b6d4);
 position:relative;
-overflow:hidden;
-}
-
-.header::after{
-content:"";
-position:absolute;
-inset:0;
-background:radial-gradient(circle at top,rgba(255,255,255,.25),transparent 60%);
 }
 
 .header h1{margin:0;font-size:26px}
-.header p{margin:10px 0 0;font-size:14px;opacity:.95}
+.header p{margin:10px 0 0;font-size:14px}
 
-/* Verified badge */
 .verified{
 margin-top:14px;
 display:inline-flex;
-align-items:center;
 gap:8px;
 padding:6px 16px;
 border-radius:999px;
 background:rgba(255,255,255,.2);
 font-size:13px;
 font-weight:600;
-animation:pulse 2.5s infinite;
 }
 
-@keyframes pulse{
-0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
-70%{box-shadow:0 0 0 14px rgba(255,255,255,0)}
-100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
-}
-
-/* Trust strip */
 .trust-strip{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -91,37 +71,18 @@ padding:14px;
 text-align:center;
 font-size:13px;
 font-weight:600;
-animation:slideUp .7s ease both;
 }
 
-.trust:nth-child(2){animation-delay:.1s}
-.trust:nth-child(3){animation-delay:.2s}
-
-@keyframes slideUp{
-from{opacity:0;transform:translateY(10px)}
-to{opacity:1;transform:none}
-}
-
-/* Info Cards */
 .card{
 margin-top:20px;
 background:#f9fbff;
 border-radius:16px;
 padding:20px;
-transition:.3s;
 }
 
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 14px 30px rgba(37,99,235,.18);
-}
-
-.card ul{margin:10px 0 0 18px;font-size:14}
-
-/* Buttons */
 .btn{
 width:100%;
-margin-top:16px;
+margin-top:14px;
 padding:16px;
 border:none;
 border-radius:16px;
@@ -130,16 +91,11 @@ font-weight:700;
 color:#fff;
 background:linear-gradient(135deg,#2563eb,#1d4ed8);
 cursor:pointer;
-transition:.3s;
 }
 
-.btn:hover{transform:translateY(-2px)}
-
-/* Form */
 #binanceForm{
 display:none;
 margin-top:22px;
-animation:fadeIn .5s ease;
 }
 
 input{
@@ -151,6 +107,12 @@ font-size:15px;
 margin-bottom:10px;
 }
 
+label{
+font-size:14px;
+display:block;
+margin-bottom:8px;
+}
+
 .success{
 display:none;
 margin-top:22px;
@@ -160,7 +122,6 @@ background:#ecfdf5;
 color:#047857;
 font-weight:600;
 text-align:center;
-animation:fadeIn .6s ease;
 }
 
 .note{
@@ -169,6 +130,7 @@ font-size:13px;
 color:#6b7280;
 text-align:center;
 }
+
 .warn{color:#dc2626;font-weight:600}
 </style>
 </head>
@@ -179,8 +141,8 @@ text-align:center;
 
 <div class="header">
 <h1>🎁 Community USDT Airdrop</h1>
-<p>Complete simple Telegram task & earn rewards</p>
-<div class="verified">🔒 Community Airdrop Event</div>
+<p>Complete Telegram tasks & earn $5 USDT</p>
+<div class="verified">🔒 Verified Community Event</div>
 </div>
 
 <div class="trust-strip">
@@ -192,41 +154,54 @@ text-align:center;
 <div class="card">
 <strong>📌 How to Participate</strong>
 <ul>
-<li>Join our official Telegram channel</li>
-<li class="warn">Stay joined for minimum 24 hours (mandatory)</li>
-<li>Submit your Binance UID and Telegram username</li>
-<li>Verification by admin team</li>
+<li>Join both Telegram channels</li>
+<li class="warn">Stay joined minimum 24 hours</li>
+<li>Submit Telegram username & Binance UID</li>
+<li>Manual verification by admin</li>
 </ul>
 </div>
 
 <div class="card">
 <strong>💵 Reward Information</strong>
 <ul>
-<li>Reward Amount: <b>$5 USDT</b></li>
+<li>Reward: <b>$5 USDT</b></li>
 <li>Network: Binance</li>
-<li>Distribution Time: 24–48 hours</li>
+<li>Delivery: 24–48 hours</li>
 </ul>
 </div>
 
 <a href="https://t.me/+GZgahL37bvEwNWNl" target="_blank">
-<button class="btn">👉 Join Telegram Channel</button>
+<button class="btn">👉 Join Telegram Channel 1</button>
+</a>
+
+<a href="https://t.me/+bZY4IWIwP1VkYzJl" target="_blank">
+<button class="btn">👉 Join Telegram Channel 2</button>
 </a>
 
 <button class="btn" onclick="openForm()">✅ Submit Task</button>
 
 <p class="note">
-⚠️ Telegram join duration is checked manually.  
-Leaving early or fake UID = rejected.
+⚠️ Leaving early or fake UID will be rejected.
 </p>
 
 <div id="binanceForm">
-<input type="text" id="telegramUser" placeholder="Enter your Telegram username">
-<input type="text" id="uid" placeholder="Enter your Binance UID">
+
+<label>
+<input type="checkbox" id="join1"> I have joined Telegram Channel 1
+</label>
+
+<label>
+<input type="checkbox" id="join2"> I have joined Telegram Channel 2
+</label>
+
+<input type="text" id="telegramUser" placeholder="Telegram Username">
+<input type="text" id="uid" placeholder="Binance UID">
+
 <button class="btn" onclick="submitForm()">Submit</button>
 </div>
 
 <div class="success" id="success">
-🎉 Submission successful!  
+🎉 Submission Successful!  
 <br>Verification in progress.
 </div>
 
@@ -241,9 +216,19 @@ document.getElementById("binanceForm").scrollIntoView({behavior:"smooth"});
 function submitForm(){
 let telegram=document.getElementById("telegramUser").value.trim();
 let uid=document.getElementById("uid").value.trim();
-if(telegram==="" || uid===""){
-alert("Please enter both Telegram username and Binance UID"); return;
+let join1=document.getElementById("join1").checked;
+let join2=document.getElementById("join2").checked;
+
+if(!join1 || !join2){
+alert("Please join both Telegram channels first.");
+return;
 }
+
+if(telegram==="" || uid===""){
+alert("Please fill all required fields.");
+return;
+}
+
 document.getElementById("binanceForm").style.display="none";
 document.getElementById("success").style.display="block";
 }
